@@ -119,9 +119,9 @@ app.get('/get',function(req, res, next) {
 io.on("connection", (socket) => {
   socket.on("join-room", (roomId, { id, name = uuidV4() } ) => {
     socket.join(roomId);
-    socket.to(roomId).broadcast.emit("user-connected", { id, name });
+    io.to(roomId).emit("user-connected", { id, name });
     socket.on("disconnect", () => {
-      socket.to(roomId).broadcast.emit("user-disconnected", { id, name });
+      io.to(roomId).emit("user-disconnected", { id, name });
     });
   });
 });
