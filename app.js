@@ -117,7 +117,7 @@ app.get('/get',function(req, res, next) {
 });
 
 io.on("connection", (socket) => {
-  socket.on("join-room", (roomId, id, name ) => {
+  socket.on("join-room", (roomId, { id, name = uuidV4() } ) => {
     socket.join(roomId);
     socket.to(roomId).broadcast.emit("user-connected", { id, name });
     socket.on("disconnect", () => {
